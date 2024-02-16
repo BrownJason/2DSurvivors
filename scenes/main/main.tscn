@@ -1,11 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnuk0fmgrp0ld"]
+[gd_scene load_steps=8 format=3 uid="uid://bnuk0fmgrp0ld"]
 
+[ext_resource type="PackedScene" uid="uid://dktn8uakcwpon" path="res://scenes/ui/area_time_ui.tscn" id="1_3gwoo"]
 [ext_resource type="TileSet" uid="uid://w36j4ctq7231" path="res://resources/tileset.tres" id="1_cyjob"]
-[ext_resource type="PackedScene" uid="uid://7j3oswduxuyf" path="res://scenes/player/player.tscn" id="1_q5f1d"]
-[ext_resource type="PackedScene" uid="uid://dt245stcrnudt" path="res://scenes/game_camera/game_camera.tscn" id="3_huaar"]
-[ext_resource type="PackedScene" uid="uid://bqaet8l4yi7vt" path="res://scenes/basic_enemy/basic_enemy.tscn" id="4_ov2uw"]
+[ext_resource type="PackedScene" uid="uid://7j3oswduxuyf" path="res://scenes/game_object/player/player.tscn" id="1_q5f1d"]
+[ext_resource type="PackedScene" uid="uid://dthho0cmp34ko" path="res://scenes/manager/enemy_manager.tscn" id="2_6qclk"]
+[ext_resource type="PackedScene" uid="uid://r7lput2prnog" path="res://scenes/manager/arena_time_manager.tscn" id="2_jy8nn"]
+[ext_resource type="PackedScene" uid="uid://dt245stcrnudt" path="res://scenes/game_object/game_camera/game_camera.tscn" id="3_huaar"]
+[ext_resource type="PackedScene" uid="uid://c0m2pw02l5ovf" path="res://scenes/manager/experience_manager.tscn" id="4_ijwwy"]
 
 [node name="Main" type="Node"]
+
+[node name="AreaTimeUI" parent="." node_paths=PackedStringArray("arena_time_manager") instance=ExtResource("1_3gwoo")]
+arena_time_manager = NodePath("../ArenaTimeManager")
+
+[node name="ArenaTimeManager" parent="." instance=ExtResource("2_jy8nn")]
+
+[node name="EnemyManager" parent="." instance=ExtResource("2_6qclk")]
+
+[node name="ExperienceManager" parent="." instance=ExtResource("4_ijwwy")]
 
 [node name="GameCamera" parent="." instance=ExtResource("3_huaar")]
 
@@ -16,6 +28,3 @@ layer_0/tile_data = PackedInt32Array(720913, 1, 4, 720914, 1, 4, 720915, 1, 4, 7
 
 [node name="Player" parent="." instance=ExtResource("1_q5f1d")]
 position = Vector2(315, 177)
-
-[node name="BasicEnemy" parent="." instance=ExtResource("4_ov2uw")]
-position = Vector2(625, 468)
