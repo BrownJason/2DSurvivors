@@ -6,6 +6,9 @@ const ACCELERATION_SMOOTHING = 20
 @onready var damage_interval_timer: Timer = %DamageIntervalTimer
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var abilities = $Abilities
+@onready var animation_player = $AnimationPlayer
+@onready var visuals = $Visuals
 
 var number_colliding_bodies = 0
 
@@ -15,6 +18,7 @@ func _ready():
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_changed.connect(on_health_changed)
 	update_health_display()
+	GameEvents.ability_upgrade_added.connect(on_ability_upgrad_added)
 
 func _process(delta):
 	var movement_vector = get_movement_vector()
@@ -24,6 +28,15 @@ func _process(delta):
 	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
 	
 	move_and_slide()
+	
+	if movement_vector.x != 0 or movement_vector.y != 0:
+		animation_player.play("walk")
+	else:
+		animation_player.play("RESET")
+		
+	var move_sign = sign(movement_vector.x)
+	if move_sign != 0:
+		visuals.scale = Vector2(move_sign, 1)
 
 func get_movement_vector():
 	var x_movement = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -53,3 +66,10 @@ func on_damage_interval_timer_timeout():
 	
 func on_health_changed():
 	update_health_display()
+
+func on_ability_upgrad_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
+	if not ability_upgrade is Ability:
+		return
+		
+	var ability = ability_upgrade as Ability
+	abilities.add_child(ability.abilitiy_controller_scene.instantiate())

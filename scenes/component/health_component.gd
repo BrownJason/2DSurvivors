@@ -5,6 +5,7 @@ signal died
 signal health_changed
 
 @export var max_health: float = 10
+
 var current_health
 
 func _ready():
