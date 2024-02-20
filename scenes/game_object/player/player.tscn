@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_iqt6y"]
 [ext_resource type="PackedScene" uid="uid://d1yah3eprguj8" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_o56h7"]
 [ext_resource type="Script" path="res://scenes/component/health_component.gd" id="2_spbf7"]
+[ext_resource type="PackedScene" uid="uid://dj6qlvrh8wopa" path="res://scenes/component/velocity_component.tscn" id="2_wou1w"]
 
 [sub_resource type="Animation" id="Animation_bawb3"]
 length = 0.001
@@ -91,9 +92,6 @@ _data = {
 "walk": SubResource("Animation_ij8u1")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pojru"]
-bg_color = Color(0.247059, 0.14902, 0.192157, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dmw4"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
 border_width_left = 2
@@ -121,6 +119,10 @@ libraries = {
 "": SubResource("AnimationLibrary_cvcl3")
 }
 
+[node name="VelocityComponent" parent="." instance=ExtResource("2_wou1w")]
+max_speed = 90
+acceleration = 25.0
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_spbf7")
 
@@ -140,7 +142,6 @@ offset_top = -24.0
 offset_right = 16.0
 offset_bottom = -18.0
 pivot_offset = Vector2(16, 3)
-theme_override_styles/background = SubResource("StyleBoxFlat_pojru")
 theme_override_styles/fill = SubResource("StyleBoxFlat_8dmw4")
 max_value = 1.0
 value = 0.5

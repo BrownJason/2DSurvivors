@@ -13,7 +13,7 @@ func _ready():
 	GameEvents.experience_vial_collected.connect(on_experience_vial_collected)
 
 func increment_experience(number: float):
-	current_experience = min(current_experience + number, target_experience)
+	current_experience += number
 	experience_updated.emit(min(current_experience, target_experience), target_experience)
 	
 	while current_experience >= target_experience:
