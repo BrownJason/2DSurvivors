@@ -50,8 +50,8 @@ func on_gui_input(event: InputEvent):
 func on_mouse_entered():
 	if disabled:
 		return
-		
-	$HoverAnimationPlayer.play("hover")
+	
+	$HoverPlayerComponent.play_random()	
 	var hover_in_tween = create_tween()
 	hover_in_tween.tween_property(self,"scale", Vector2(1.2, 1.2), 0.1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 

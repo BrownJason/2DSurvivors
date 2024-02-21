@@ -36,6 +36,7 @@ arena_time_manager = NodePath("../ArenaTimeManager")
 experience_manager = NodePath("../ExperienceManager")
 
 [node name="GameCamera" parent="." instance=ExtResource("3_huaar")]
+position = Vector2(315, 170)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_cyjob")
