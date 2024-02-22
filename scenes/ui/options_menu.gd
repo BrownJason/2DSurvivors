@@ -1,14 +1,19 @@
 extends CanvasLayer
+class_name OptionsMenu
 
 signal back_pressed
+
 
 @onready var sfx_slider = %SfxSlider
 @onready var music_slider = %MusicSlider
 @onready var window_button = %WindowButton
 @onready var back_button = %BackButton
+@onready var save_button = %SaveButton
+
 
 func _ready():
 	window_button.pressed.connect(on_window_button_pressed)
+	save_button.pressed.connect(on_save_pressed)
 	music_slider.value_changed.connect(on_music_slider_range_changed.bind("music"))
 	sfx_slider.value_changed.connect(on_sfx_slider_range_changed.bind("sfx"))
 	back_button.pressed.connect(on_back_button_pressed)
@@ -37,6 +42,7 @@ func on_window_button_pressed():
 	if mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		
 	update_display()
@@ -50,6 +56,7 @@ func on_music_slider_range_changed(value: float, bus_name: String):
 	update_display()
 
 func on_back_button_pressed():
-	ScreenTransition.transition()
-	await ScreenTransition.transitioned_halfway
 	back_pressed.emit()
+
+func on_save_pressed():
+	OptionsSave.set_settings(music_slider.value, sfx_slider.value, window_button.text)

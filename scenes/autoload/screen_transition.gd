@@ -12,6 +12,12 @@ func transition():
 	skip_emit = false
 	animation_player.play_backwards("default")
 	
+func transition_to_scene(scene_path: String):
+	transition()
+	await transitioned_halfway
+	get_tree().paused = false
+	get_tree().change_scene_to_file(scene_path)	
+	
 func emit_transitioned_halfway():
 	if skip_emit:
 		skip_emit = false
