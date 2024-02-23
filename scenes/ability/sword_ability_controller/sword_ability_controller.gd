@@ -9,6 +9,10 @@ var additional_damage_percent = 1
 var base_wait_time
 
 func _ready():
+	var base_damage_increase = MetaProgression.get_upgrade_count("damage_increase")
+	if base_damage_increase > 0:
+		base_damage = (base_damage + base_damage * (base_damage_increase * 0.1))
+		
 	base_wait_time = $Timer.wait_time
 	$Timer.timeout.connect(_on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)

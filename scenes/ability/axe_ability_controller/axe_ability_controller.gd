@@ -8,6 +8,10 @@ var base_damage = 10
 var additional_damage_percent = 1
 
 func _ready():
+	var base_damage_increase = MetaProgression.get_upgrade_count("damage_increase")
+	if base_damage_increase > 0:
+		base_damage = (base_damage + base_damage * (base_damage_increase * 0.1))
+		
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	
