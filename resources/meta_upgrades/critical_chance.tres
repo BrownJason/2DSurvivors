@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MetaUpgrade" load_steps=2 format=3 uid="uid://blmretelh5hdo"]
+
+[ext_resource type="Script" path="res://resources/meta_upgrades/meta_upgrade.gd" id="1_p2eeo"]
+
+[resource]
+script = ExtResource("1_p2eeo")
+id = "critical_chance"
+max_quantity = 20
+experience_cost = 125
+title = "Crit Chance Increase"
+description = "Increase critical chance by 5%"

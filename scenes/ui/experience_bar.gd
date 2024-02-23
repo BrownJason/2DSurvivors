@@ -20,5 +20,3 @@ func on_experience_updated(current_experience: float, target_experience: float, 
 		tween.tween_callback(experience_manager.leveled_up)
 	tween.tween_interval(0.2)
 	level_label.text = str(experience_manager.current_level)
-
-	

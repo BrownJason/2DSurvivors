@@ -5,12 +5,21 @@ const BASE_RANGE = 100
 @export var anvil_ability_scene: PackedScene
 
 var base_damage = 15
+var base_critical_chance = 0.05 # 5 % crit change
+var base_critical_damage = 0.5  # 50% crit damage, 1.5x base damage
 var additional_anvil = 0
 
 func _ready():
 	var base_damage_increase = MetaProgression.get_upgrade_count("damage_increase")
 	if base_damage_increase > 0:
 		base_damage = (base_damage + base_damage * (base_damage_increase * 0.1))
+	var base_critical_chance_increase = MetaProgression.get_upgrade_count("critical_chance")
+	if base_critical_chance_increase > 0:
+		base_critical_chance = base_critical_chance + (base_critical_chance_increase * 0.05)
+	var base_critical_damage_increase = MetaProgression.get_upgrade_count("critical_damage")
+	if base_critical_damage_increase > 0:
+		base_critical_damage = base_critical_damage + (base_critical_damage_increase * 0.10)
+	
 	$Timer.timeout.connect(_on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 
@@ -34,7 +43,13 @@ func _on_timer_timeout():
 		var anvil_ability = anvil_ability_scene.instantiate()
 		get_tree().get_first_node_in_group("foreground_layer").add_child(anvil_ability)
 		anvil_ability.global_position = spawn_position
-		anvil_ability.hit_box_component.damage = base_damage
+		var crit_hit = randf_range(0, 1)
+		if crit_hit <= base_critical_chance:
+			anvil_ability.hit_box_component.damage = (base_damage + (base_damage * base_critical_damage))
+			anvil_ability.hit_box_component.is_crit = true 
+		else:
+			anvil_ability.hit_box_component.damage = base_damage
+			anvil_ability.hit_box_component.is_crit = false 
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):

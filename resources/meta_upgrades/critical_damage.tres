@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MetaUpgrade" load_steps=2 format=3 uid="uid://cowgvj83ws1vt"]
+
+[ext_resource type="Script" path="res://resources/meta_upgrades/meta_upgrade.gd" id="1_buw6c"]
+
+[resource]
+script = ExtResource("1_buw6c")
+id = "critical_damage"
+max_quantity = 20
+experience_cost = 150
+title = "Crit Damage Increase"
+description = "Increase critical damage by 10%"

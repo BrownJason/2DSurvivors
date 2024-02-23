@@ -1,12 +1,14 @@
 extends Node2D
 
 @onready var label = $Label
+var color: Color
 
 func _ready():
 	pass
 	
-func start(text: String):
+func start(text: String, color: Color):
 	label.text = text
+	label.add_theme_color_override("font_color", color)
 	
 	var tween = create_tween()
 	tween.set_parallel()
