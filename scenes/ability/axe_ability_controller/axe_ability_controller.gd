@@ -33,15 +33,9 @@ func on_timer_timeout():
 	var axe_instance = axe_ability_scene.instantiate()
 	foreground.add_child(axe_instance)
 	axe_instance.global_position = player.global_position
-	var crit_hit = randf_range(0, 1)
-	var initial_damage = damage_info["base_damage"] * additional_damage_percent
-	if crit_hit <= damage_info["base_critical_chance"]:
-		axe_instance.hit_box_component.damage = (initial_damage + (initial_damage * damage_info["base_critical_damage"])) 
-		axe_instance.hit_box_component.is_crit = true 
-	else:
-		axe_instance.hit_box_component.damage = initial_damage * additional_damage_percent
-		axe_instance.hit_box_component.is_crit = false 
-
+	var calculated_damage = damage_calculations.calculate_damage(axe_instance, additional_damage_percent)
+	axe_instance.hit_box_component.damage = calculated_damage["damage"]
+	axe_instance.hit_box_component.is_crit = calculated_damage["is_crit"]
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
 	if upgrade.id == "axe_damage":

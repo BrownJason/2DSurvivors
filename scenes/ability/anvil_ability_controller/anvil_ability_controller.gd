@@ -41,14 +41,9 @@ func _on_timer_timeout():
 		var anvil_ability = anvil_ability_scene.instantiate()
 		get_tree().get_first_node_in_group("foreground_layer").add_child(anvil_ability)
 		anvil_ability.global_position = spawn_position
-		var crit_hit = randf_range(0, 1)
-		var initial_damage = damage_info["base_damage"]
-		if crit_hit <= damage_info["base_critical_chance"]:
-			anvil_ability.hit_box_component.damage = (initial_damage + (initial_damage * damage_info["base_critical_damage"]))
-			anvil_ability.hit_box_component.is_crit = true 
-		else:
-			anvil_ability.hit_box_component.damage = initial_damage
-			anvil_ability.hit_box_component.is_crit = false 
+		var calculated_damage = damage_calculations.calculate_damage(anvil_ability, 1)
+		anvil_ability.hit_box_component.damage = calculated_damage["damage"]
+		anvil_ability.hit_box_component.is_crit = calculated_damage["is_crit"]
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):

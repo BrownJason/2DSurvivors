@@ -45,14 +45,9 @@ func _on_timer_timeout():
 	var sword_instance = sword_ability.instantiate() as SwordAbility
 	var foregound_layer = get_tree().get_first_node_in_group("foreground_layer")
 	foregound_layer.add_child(sword_instance)
-	var crit_hit = randf_range(0, 1)
-	var initial_damage = damage_info["base_damage"] * additional_damage_percent
-	if crit_hit <= damage_info["base_critical_chance"]:
-		sword_instance.hit_box_component.damage = (initial_damage + (initial_damage * damage_info["base_critical_damage"])) 
-		sword_instance.hit_box_component.is_crit = true 
-	else:
-		sword_instance.hit_box_component.damage = initial_damage
-		sword_instance.hit_box_component.is_crit = false 
+	var calculated_damage = damage_calculations.calculate_damage(sword_instance, additional_damage_percent)
+	sword_instance.hit_box_component.damage = calculated_damage["damage"]
+	sword_instance.hit_box_component.is_crit = calculated_damage["is_crit"]
 	sword_instance.global_position = enemies[0].global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
 	
