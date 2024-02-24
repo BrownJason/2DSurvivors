@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var label = $Label
-var color: Color
 
 func _ready():
 	pass

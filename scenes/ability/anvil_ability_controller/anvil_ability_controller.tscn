@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://swr5b1kr32k5"]
+[gd_scene load_steps=4 format=3 uid="uid://swr5b1kr32k5"]
 
 [ext_resource type="Script" path="res://scenes/ability/anvil_ability_controller/anvil_ability_controller.gd" id="1_5hvpf"]
 [ext_resource type="PackedScene" uid="uid://wjtrp7pwa1ry" path="res://scenes/ability/anvil_ability/anvil_ability.tscn" id="2_yhsbt"]
+[ext_resource type="PackedScene" uid="uid://dsbogriandqvm" path="res://scenes/ability/damage_calculations.tscn" id="3_xlv7e"]
 
 [node name="AnvilAbilityController" type="Node"]
 script = ExtResource("1_5hvpf")
@@ -10,3 +11,8 @@ anvil_ability_scene = ExtResource("2_yhsbt")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="DamageCalculations" parent="." instance=ExtResource("3_xlv7e")]
+base_damage = 15.0
+base_critical_chance = 0.05
+base_critical_damage = 0.5

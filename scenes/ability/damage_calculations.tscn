@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsbogriandqvm"]
+
+[ext_resource type="Script" path="res://scenes/ability/damage_calculations.gd" id="1_83irl"]
+
+[node name="DamageCalculations" type="Node"]
+script = ExtResource("1_83irl")

@@ -3,6 +3,7 @@ extends Node
 const MAX_RANGE = 150
 
 @export var sword_ability: PackedScene
+@onready var damage_calculations = $DamageCalculations
 
 var base_damage = 5
 var base_critical_chance = 0.05 # 5 % crit change
@@ -10,17 +11,14 @@ var base_critical_damage = 0.5  # 50% crit damage, 1.5x base damage
 var additional_damage_percent = 1
 var base_wait_time
 
+var damage_info = {
+	"base_damage": base_damage,
+	"base_critical_chance": base_critical_chance,
+	"base_critical_damage": base_critical_damage
+}
+
 func _ready():
-	var base_damage_increase = MetaProgression.get_upgrade_count("damage_increase")
-	if base_damage_increase > 0:
-		base_damage = (base_damage + base_damage * (base_damage_increase * 0.1))
-	var base_critical_chance_increase = MetaProgression.get_upgrade_count("critical_chance")
-	if base_critical_chance_increase > 0:
-		base_critical_chance = base_critical_chance + (base_critical_chance_increase * 0.05)
-	var base_critical_damage_increase = MetaProgression.get_upgrade_count("critical_damage")
-	if base_critical_damage_increase > 0:
-		base_critical_damage = base_critical_damage + (base_critical_damage_increase * 0.10)
-		
+	damage_info = damage_calculations.get_damage_increase_calculations()
 	base_wait_time = $Timer.wait_time
 	$Timer.timeout.connect(_on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
@@ -48,12 +46,12 @@ func _on_timer_timeout():
 	var foregound_layer = get_tree().get_first_node_in_group("foreground_layer")
 	foregound_layer.add_child(sword_instance)
 	var crit_hit = randf_range(0, 1)
-	if crit_hit <= base_critical_chance:
-		var initial_damage = base_damage * additional_damage_percent
-		sword_instance.hit_box_component.damage = (initial_damage + (initial_damage * base_critical_damage)) 
+	var initial_damage = damage_info["base_damage"] * additional_damage_percent
+	if crit_hit <= damage_info["base_critical_chance"]:
+		sword_instance.hit_box_component.damage = (initial_damage + (initial_damage * damage_info["base_critical_damage"])) 
 		sword_instance.hit_box_component.is_crit = true 
 	else:
-		sword_instance.hit_box_component.damage = base_damage * additional_damage_percent
+		sword_instance.hit_box_component.damage = initial_damage
 		sword_instance.hit_box_component.is_crit = false 
 	sword_instance.global_position = enemies[0].global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4

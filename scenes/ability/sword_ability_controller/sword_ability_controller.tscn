@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1yah3eprguj8"]
+[gd_scene load_steps=4 format=3 uid="uid://d1yah3eprguj8"]
 
 [ext_resource type="Script" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.gd" id="1_7o1wg"]
 [ext_resource type="PackedScene" uid="uid://bfkxrm3xucncn" path="res://scenes/ability/sword_ability/sword_ability.tscn" id="2_5pad6"]
+[ext_resource type="PackedScene" uid="uid://dsbogriandqvm" path="res://scenes/ability/damage_calculations.tscn" id="3_8yphq"]
 
 [node name="SwordAbilityController" type="Node"]
 script = ExtResource("1_7o1wg")
@@ -10,3 +11,8 @@ sword_ability = ExtResource("2_5pad6")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.5
 autostart = true
+
+[node name="DamageCalculations" parent="." instance=ExtResource("3_8yphq")]
+base_damage = 5.0
+base_critical_chance = 0.05
+base_critical_damage = 0.5

@@ -116,7 +116,7 @@ border_color = Color(0.8, 0.8, 0.8, 0)
 [node name="MetaUpgradeCard" type="PanelContainer" groups=["meta_upgrade_card"]]
 custom_minimum_size = Vector2(170, 0)
 offset_right = 170.0
-offset_bottom = 209.0
+offset_bottom = 239.0
 pivot_offset = Vector2(75, 75)
 size_flags_horizontal = 0
 script = ExtResource("1_6ipsk")
